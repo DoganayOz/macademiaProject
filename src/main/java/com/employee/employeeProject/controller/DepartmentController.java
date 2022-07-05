@@ -44,7 +44,6 @@ public class DepartmentController {
     	  departmentService.deleteDepartmentById(id);
         return new ResponseEntity<String>(HttpStatus.OK);
       }catch(RuntimeException ex){
-        // log the error message
         System.out.println(ex.getMessage());
         return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
       }
@@ -57,7 +56,6 @@ public class DepartmentController {
     	  departmentService.updateDepartment(department);
         return new ResponseEntity<String>(HttpStatus.OK);
       }catch(NoSuchElementException ex){
-        // log the error message
         System.out.println(ex.getMessage());
         return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
       }

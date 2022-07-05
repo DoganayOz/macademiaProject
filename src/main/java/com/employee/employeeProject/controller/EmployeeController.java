@@ -5,9 +5,12 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.employee.employeeProject.bean.EmployeeRequest;
 import com.employee.employeeProject.model.Employee;
 import com.employee.employeeProject.service.EmployeeService;
 
@@ -46,7 +51,6 @@ public class EmployeeController {
     	  employeeService.deleteEmployeeById(id);
         return new ResponseEntity<String>(HttpStatus.OK);
       }catch(RuntimeException ex){
-        // log the error message
         System.out.println(ex.getMessage());
         return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
       }
@@ -59,17 +63,15 @@ public class EmployeeController {
     	  employeeService.updateEmployee(employee);
         return new ResponseEntity<String>(HttpStatus.OK);
       }catch(NoSuchElementException ex){
-        // log the error message
         System.out.println(ex.getMessage());
         return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
       }
     }
     
-    @PostMapping("/employeeByStartDateAndIncome/{day}/{month}/{year}/{salary}")
-    public List<Employee> getEmployeeByStartDateAndIncome(@PathVariable("day") int day, @PathVariable("month") int month,
-			@PathVariable("year") int year, @PathVariable int salary){
-    	LocalDate startDate = LocalDate.of(year, month, day);
-    	return employeeService.getEmployeeByStartDateAndIncome(startDate, salary);
+    @RequestMapping(method = RequestMethod.POST, path = "/employeeByStartDateAndIncome")
+    public List<Employee> getEmployeeByStartDateAndIncome(@Validated @RequestBody EmployeeRequest input){
+    	LocalDate startDate = LocalDate.of(input.getYear(), input.getMonth(), input.getDay());
+    	return employeeService.getEmployeeByStartDateAndIncome(startDate, input.getSalary());
     }
     
     @PutMapping("/updateLocationByDepartment/{departmentId}/{location}")
@@ -78,13 +80,12 @@ public class EmployeeController {
     	  employeeService.updateLocationByDepartment(location, departmentId);
         return new ResponseEntity<String>(HttpStatus.OK);
       }catch(NoSuchElementException ex){
-        // log the error message
         System.out.println(ex.getMessage());
         return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
       }
     }
     
-	@GetMapping("/findWinnerEmployeeByMonth")
+	@PostMapping("/findWinnerEmployeeByMonth")
 	public int findWinnerEmployeeByMonth(){
 	    return employeeService.findWinnerEmployeeByMonth();
 	}

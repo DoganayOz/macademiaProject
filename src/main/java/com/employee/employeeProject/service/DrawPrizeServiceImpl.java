@@ -36,10 +36,10 @@ public class DrawPrizeServiceImpl implements DrawPrizeService {
 	  
 	  @Override
 	  public void updateDrawPrize(DrawPrize drawPrize) {
-	    // check if the user with the passed id exists or not
 		  DrawPrize drawPrizeDB = drawPrizeRepository.findById(drawPrize.getId()).orElseThrow();
-	    //TODO: If user exist drawPrize then updated
-		  drawPrizeRepository.save(drawPrize);
+		  if(drawPrizeDB != null) {
+			  drawPrizeRepository.save(drawPrize);
+		  }
 	  }
 	  
 	  @Override

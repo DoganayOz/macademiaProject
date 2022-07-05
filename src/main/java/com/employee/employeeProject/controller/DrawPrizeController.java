@@ -44,7 +44,6 @@ public class DrawPrizeController {
     	  drawPrizeService.deleteDrawPrizeById(id);
         return new ResponseEntity<String>(HttpStatus.OK);
       }catch(RuntimeException ex){
-        // log the error message
         System.out.println(ex.getMessage());
         return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
       }
@@ -57,7 +56,6 @@ public class DrawPrizeController {
     	  drawPrizeService.updateDrawPrize(drawPrize);
         return new ResponseEntity<String>(HttpStatus.OK);
       }catch(NoSuchElementException ex){
-        // log the error message
         System.out.println(ex.getMessage());
         return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
       }

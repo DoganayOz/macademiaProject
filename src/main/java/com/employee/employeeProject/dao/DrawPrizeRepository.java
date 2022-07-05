@@ -6,5 +6,4 @@ import com.employee.employeeProject.model.DrawPrize;
 
 public interface DrawPrizeRepository extends JpaRepository<DrawPrize, Integer>{
 
-
 }

@@ -29,10 +29,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 	  
 	  @Override
 	  public void updateDepartment(Department department) {
-	    // check if the user with the passed id exists or not
 		  Department departmentDB = departmentRepository.findById(department.getId()).orElseThrow();
-	    //TODO: If user exists department then updated
-		  departmentRepository.save(department);
+		  if(departmentDB != null) {
+			  departmentRepository.save(department);
+		  }
 	  }
 	  
 	  @Override

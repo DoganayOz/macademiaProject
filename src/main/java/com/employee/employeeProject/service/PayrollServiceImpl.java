@@ -30,10 +30,10 @@ public class PayrollServiceImpl implements PayrollService {
 	  
 	  @Override
 	  public void updatePayroll(Payroll payroll) {
-	    // check if the user with the passed id exists or not
 		  Payroll payrollDB = payrollRepository.findById(payroll.getId()).orElseThrow();
-	    //TODO: If user exists payroll then updated
-		  payrollRepository.save(payroll);
+		  if(payrollDB != null) {
+			  payrollRepository.save(payroll);
+		  }
 	  }
 	  
 	  @Override

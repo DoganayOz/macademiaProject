@@ -43,7 +43,6 @@ public class PayrollController {
     	  payrollService.deletePayrollById(id);
         return new ResponseEntity<String>(HttpStatus.OK);
       }catch(RuntimeException ex){
-        // log the error message
         System.out.println(ex.getMessage());
         return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
       }
@@ -56,7 +55,6 @@ public class PayrollController {
     	  payrollService.updatePayroll(payroll);
         return new ResponseEntity<String>(HttpStatus.OK);
       }catch(NoSuchElementException ex){
-        // log the error message
         System.out.println(ex.getMessage());
         return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
       }
